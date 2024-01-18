@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=djchat
+POSTGRES_USER=KzeRfOronwMrbHWuHtvkMEyhFpiOpGbr
+POSTGRES_PASSWORD=RdB4koSXAs7Hxjknamo1eitVSdEx7ayX1EkV4znFG7XasogpiRGVwX3nwW0o5ZyA

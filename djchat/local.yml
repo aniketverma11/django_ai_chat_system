@@ -1,0 +1,84 @@
+version: '3'
+
+volumes:
+  djchat_local_postgres_data: {}
+  djchat_local_postgres_data_backups: {}
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: djchat_local_django
+    container_name: djchat_local_django
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    ports:
+      - '8000:8000'
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: djchat_production_postgres
+    container_name: djchat_local_postgres
+    volumes:
+      - djchat_local_postgres_data:/var/lib/postgresql/data
+      - djchat_local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres
+
+  docs:
+    image: djchat_local_docs
+    container_name: djchat_local_docs
+    build:
+      context: .
+      dockerfile: ./compose/local/docs/Dockerfile
+    env_file:
+      - ./.envs/.local/.django
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./djchat:/app/djchat:z
+    ports:
+      - '9000:9000'
+    command: /start-docs
+
+  redis:
+    image: redis:6
+    container_name: djchat_local_redis
+
+  celeryworker:
+    <<: *django
+    image: djchat_local_celeryworker
+    container_name: djchat_local_celeryworker
+    depends_on:
+      - redis
+      - postgres
+    ports: []
+    command: /start-celeryworker
+
+  celerybeat:
+    <<: *django
+    image: djchat_local_celerybeat
+    container_name: djchat_local_celerybeat
+    depends_on:
+      - redis
+      - postgres
+    ports: []
+    command: /start-celerybeat
+
+  flower:
+    <<: *django
+    image: djchat_local_flower
+    container_name: djchat_local_flower
+    ports:
+      - '5555:5555'
+    command: /start-flower
