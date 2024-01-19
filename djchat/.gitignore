@@ -279,3 +279,5 @@ djchat/media/
 .env
 .envs/*
 !.envs/.local/
+
+djchat/contrib/sites/migrations/
