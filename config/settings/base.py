@@ -91,6 +91,8 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "djchat.users",
+    "djchat.chat.apps.ChatConfig",
+    "djchat.server.apps.ServerConfig"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

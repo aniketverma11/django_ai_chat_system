@@ -61,3 +61,8 @@ if settings.DEBUG:
         import debug_toolbar
 
         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+
+admin.site.site_header = "AI Chat System"
+# admin.site.site_header = "https://www.dalmiacement.com/futuretoday/images/future-today.png"
+admin.site.site_title = "AI Chat System"
+admin.site.index_title = "Welcome to AI Chat System"
