@@ -284,3 +284,4 @@ djchatenv/
 
 djchat/contrib/sites/migrations/
 djenv/
+db.sqlite3
