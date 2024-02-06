@@ -5,8 +5,16 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
+
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.routers import DefaultRouter
+
+from djchat.server.api.v1.views import ServerListViewset
+
+router = DefaultRouter()
+router.register("server/api/v1/select/", ServerListViewset)
+
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -17,7 +25,8 @@ urlpatterns = [
     path("users/", include("djchat.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + router.urls + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 if settings.DEBUG:
     # Static file serving when using Gunicorn + Uvicorn for local web socket development
     urlpatterns += staticfiles_urlpatterns()
@@ -35,6 +44,8 @@ urlpatterns += [
         name="api-docs",
     ),
 ]
+
+
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
