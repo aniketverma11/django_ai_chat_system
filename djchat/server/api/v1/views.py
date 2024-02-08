@@ -8,12 +8,13 @@ from rest_framework.exceptions import ValidationError, AuthenticationFailed
 from ...models import Server
 from .serializers import ServerSerializer, ChannelSerializer, CategorySerializer
 
+
 # Define a viewset for listing servers
 class ServerListViewset(viewsets.ViewSet):
     # Set permissions and authentication classes
     permission_classes = ()
     authentication_classes = ()
-    
+
     # Define the initial queryset
     queryset = Server.objects.all()
 
@@ -42,7 +43,7 @@ class ServerListViewset(viewsets.ViewSet):
                     raise ValidationError(detail=f"Server with id {by_serverId} not found")
             except ValueError:
                 raise ValidationError(detail=f"Server with ID {by_serverId} not found")
-        
+
         # Filter the queryset by category if provided
         if category:
             self.queryset = self.queryset.filter(category__name=category)
