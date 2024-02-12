@@ -11,6 +11,7 @@ from .serializers import ServerSerializer, ChannelSerializer, CategorySerializer
 
 # Define a viewset for listing servers
 class ServerListViewset(viewsets.ViewSet):
+
     # Set permissions and authentication classes
     permission_classes = ()
     authentication_classes = ()
@@ -20,6 +21,7 @@ class ServerListViewset(viewsets.ViewSet):
 
     # Define the list method to handle GET requests
     def list(self, request):
+        
         # Extract query parameters from the request
         category = request.query_params.get("category")
         qty = request.query_params.get("qty")

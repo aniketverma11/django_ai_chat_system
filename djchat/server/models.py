@@ -5,7 +5,6 @@ from django.dispatch import receiver
 
 
 def category_icon_uplpoad_path(instance, filename):
-    print("-----------------instance id----------------", instance.id)
     return f"category/{instance.id}/category_icon/{filename}"
 
 
@@ -56,3 +55,4 @@ class Channel(models.Model):
 
     def __str__(self):
         return self.name
+    
